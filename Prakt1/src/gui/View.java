@@ -8,21 +8,26 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import business.Haushaltroboter;
-import javafx.event.*;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import ownUtil.*;
-import ownUtil.Control;
 
 public class View {
 	
 	public Control c;
 	public Model m;
+	
+	public View(Stage primaryStage, Control c, Model m) {
+		this.c = c;
+		this.m = m;
+		Scene scene = new Scene(this.pane, 700, 340);
+    	primaryStage.setScene(scene);
+    	primaryStage.setTitle("Verwaltung von Haushaltsroboter");
+    	primaryStage.show();
+    	this.initKomponenten();
+		this.initListener();
+	}
 	
     private Pane pane     					= new  Pane();
     private Label lblEingabe    	 		= new Label("Eingabe");
@@ -50,15 +55,8 @@ public class View {
     private MenuItem mnItmTxtImport 		= new MenuItem("txt-Import");
     private MenuItem mnItmCsvExport 		= new MenuItem("csv-Export"); 
 	
-	public View(Model m, Stage primaryStage, Control c) {
-		Scene scene = new Scene(this.pane, 700, 340);
-    	primaryStage.setScene(scene);
-    	primaryStage.setTitle("Verwaltung von Haushaltsroboter");
-    	primaryStage.show();
-    	this.initKomponenten();
-		this.initListener();
-	}
-	
+
+    
     private void initKomponenten(){
        	// Labels
     	lblEingabe.setLayoutX(20);
@@ -138,53 +136,52 @@ public class View {
 	    btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
 	    	@Override
 	        public void handle(ActionEvent e) {
-	            zeigeBuergeraemterAn();
+	            zeigeHaushaltroboterAn();
 	        } 
    	    });
-	    mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
-	    	@Override
-	        public void handle(ActionEvent e) {
-	       	 	c.leseAusDatei("csv");
-	    	}
-	    });
 	    mnItmTxtImport.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent e) {
-		     	c.leseAusDatei("txt");
+				schreibeHaushaltroboterInDatei("txt");
 		    }
     	});
 	    mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				m.schreibeBuergeraemterInCsvDatei();
-			}	
+				schreibeHaushaltroboterInDatei("csv");
+			}
 	    });
     }
 	
 	private void nehmeHaushaltsroboterAuf(){
     	try{
-    		this.m = new Haushaltroboter(
-    			Integer.parseInt(txtSeriennummer.getText()), 
+    		this.m.haushaltroboter = new Haushaltroboter(
+    			(int) Integer.parseInt(txtSeriennummer.getText()), 
    	            Float.parseFloat(txtPreis.getText()),
    	            txtModell.getText(),
     		    txtSensortyp.getText(),
     		    txtFarbe.getText().split(";"));
     		zeigeInformationsfensterAn("Das Haushaltsroboter wurde aufgenommen!");
        	}
-       	catch(Exception exc){
-       		zeigeFehlermeldungsfensterAn(exc.getMessage());
+       	catch(Exception e){
+       		zeigeFehlermeldungsfensterAn(e.getMessage());
      	}
     }
    
-    private void zeigeBuergeraemterAn(){
-    	if(this.haushaltsroboter != null){
+    private void zeigeHaushaltroboterAn(){
+    	if(this.m.haushaltroboter != null){
     		txtAnzeige.setText(
-    			this.haushaltsroboter.gibHausroboternZurueck(' '));
+    			this.m.haushaltroboter.gibHausroboternZurueck(' '));
     	}
     	else{
     		zeigeInformationsfensterAn("Bisher wurde kein Haushaltsroboter aufgenommen!");
     	}
     }
+    
+	private void schreibeHaushaltroboterInDatei(String typ) {
+		this.c.schreibeHaushaltroboterInDatei(typ);
+	} 
+	
     public void zeigeInformationsfensterAn(String meldung){
     	new MeldungsfensterAnzeiger(AlertType.INFORMATION,
     		"Information", meldung).zeigeMeldungsfensterAn();

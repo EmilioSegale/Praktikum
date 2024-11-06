@@ -87,5 +87,6 @@ public class Haushaltroboter {
   		    + this.getColor(trenner) + "\n";
   	}
 
+	
 
 }

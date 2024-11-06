@@ -7,16 +7,23 @@ import java.io.IOException;
 
 public class Model {
 	
-	public Haushaltroboter a;
+	public Haushaltroboter haushaltroboter;
 	
 		
 	public Haushaltroboter getHaushaltroboter() {
-		return a;
+		return haushaltroboter;
+	}
+	public void setHaushaltroboter(Haushaltroboter haushaltroboter) {
+	    this.haushaltroboter = haushaltroboter;
 	}
 	
-	public void schreibeBuergeraemterInCsvDatei() throws IOException {
+	
+	public void schreibeHaushaltroboterInCsvDatei() throws IOException {
+		if (this.haushaltroboter == null) {
+	        throw new IllegalStateException("Haushaltroboter no ha sido inicializado.");
+	    }
 			BufferedWriter aus = new BufferedWriter(new FileWriter("Haushaltsroboter.csv", true));
-			aus.write(a.gibHausroboternZurueck(';'));
+			aus.write(this.getHaushaltroboter().gibHausroboternZurueck(';'));
 			aus.close();
 
 	}
