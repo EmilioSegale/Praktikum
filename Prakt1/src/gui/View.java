@@ -156,7 +156,7 @@ public class View {
 	private void nehmeHaushaltsroboterAuf(){
     	try{
     		this.m.haushaltroboter = new Haushaltroboter(
-    			(int) Integer.parseInt(txtSeriennummer.getText()), 
+    			Integer.parseInt(txtSeriennummer.getText()), 
    	            Float.parseFloat(txtPreis.getText()),
    	            txtModell.getText(),
     		    txtSensortyp.getText(),
@@ -171,7 +171,7 @@ public class View {
     private void zeigeHaushaltroboterAn(){
     	if(this.m.haushaltroboter != null){
     		txtAnzeige.setText(
-    			this.m.haushaltroboter.gibHausroboternZurueck(' '));
+    			this.m.haushaltroboter.gibHausroboternZurueck('-'));
     	}
     	else{
     		zeigeInformationsfensterAn("Bisher wurde kein Haushaltsroboter aufgenommen!");

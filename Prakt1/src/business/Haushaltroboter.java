@@ -80,10 +80,10 @@ public class Haushaltroboter {
 	
 	//GetHaushaltroboter
 	public String gibHausroboternZurueck(char trenner){
-  		return this.getSeriennummer() + trenner 
-  			+ this.getPreis() + trenner
+  		return String.valueOf(this.getSeriennummer()) + trenner 
+  			+ String.valueOf(this.getPreis()) + trenner
   		    + this.getModell() + trenner
-  		    + this.getSensorTyp() + trenner + "\n"
+  		    + this.getSensorTyp() + trenner
   		    + this.getColor(trenner) + "\n";
   	}
 
