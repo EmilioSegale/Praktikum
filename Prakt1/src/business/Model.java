@@ -20,7 +20,7 @@ public class Model {
 	
 	public void schreibeHaushaltroboterInCsvDatei() throws IOException {
 		if (this.haushaltroboter == null) {
-	        throw new IllegalStateException("Haushaltroboter no ha sido inicializado.");
+	        throw new IllegalStateException("Haushaltroboter can not be Ini.");
 	    }
 			BufferedWriter aus = new BufferedWriter(new FileWriter("Haushaltsroboter.csv", true));
 			aus.write(this.getHaushaltroboter().gibHausroboternZurueck(';'));

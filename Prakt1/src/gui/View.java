@@ -145,6 +145,13 @@ public class View {
 				schreibeHaushaltroboterInDatei("txt");
 		    }
     	});
+	    
+	    mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent e) {
+		    	c.leseAusDatei("csv");
+		    }
+    	});
 	    mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -152,7 +159,7 @@ public class View {
 			}
 	    });
     }
-	
+   
 	private void nehmeHaushaltsroboterAuf(){
     	try{
     		this.m.haushaltroboter = new Haushaltroboter(
